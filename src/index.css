@@ -50,3 +50,22 @@ body,
   0% { width: 0%; }
   100% { width: 63%; }
 }
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  html,
+  body,
+  #root {
+    min-width: 0;
+  }
+}

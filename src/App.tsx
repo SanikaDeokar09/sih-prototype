@@ -32,43 +32,90 @@ export default function App() {
 
   const nav = (s: Screen) => setScreen(s);
 
+  // Login screen does not use the sidebar
   if (screen === "login") {
     return <Login onLogin={() => nav("dashboard")} />;
   }
 
   return (
-    <div className="flex h-full overflow-hidden" style={{ background: "#0f1623" }}>
-      <Sidebar current={screen} onNavigate={(s) => nav(s as Screen)} />
+    <div
+      className="flex h-full min-h-0 w-full overflow-hidden"
+      style={{ background: "#0f1623" }}
+    >
+      {/* Sidebar
+          Desktop: permanently visible
+          Mobile: becomes a slide-out menu
+      */}
+      <Sidebar
+        current={screen}
+        onNavigate={(s) => nav(s as Screen)}
+      />
 
-      {screen === "dashboard" && (
-        <Dashboard onNavigate={(s) => nav(s as Screen)} />
-      )}
-      {screen === "drive-eraser" && (
-        <DriveEraser onStart={() => nav("drive-progress")} onCancel={() => nav("dashboard")} />
-      )}
-      {screen === "drive-progress" && (
-        <ErasureProgress onComplete={() => nav("drive-success")} />
-      )}
-      {screen === "drive-success" && (
-        <ErasureSuccess onDashboard={() => nav("dashboard")} onReport={() => nav("reports")} />
-      )}
-      {screen === "file-eraser" && (
-        <FileEraser onCancel={() => nav("dashboard")} />
-      )}
-      {screen === "file-recovery" && (
-        <FileRecovery onStartScan={() => nav("scan-progress")} onCancel={() => nav("dashboard")} />
-      )}
-      {screen === "scan-progress" && (
-        <ScanProgress onComplete={() => nav("scan-results")} />
-      )}
-      {screen === "scan-results" && (
-        <ScanResults onPreview={() => nav("file-preview")} onBack={() => nav("file-recovery")} />
-      )}
-      {screen === "file-preview" && (
-        <FilePreview onBack={() => nav("scan-results")} onRecover={() => nav("scan-results")} />
-      )}
-      {screen === "reports" && <Reports />}
-      {screen === "settings" && <Settings />}
+      {/* Main application area */}
+      <main className="min-w-0 min-h-0 flex-1 overflow-auto pt-14 md:pt-0">
+        {screen === "dashboard" && (
+          <Dashboard
+            onNavigate={(s) => nav(s as Screen)}
+          />
+        )}
+
+        {screen === "drive-eraser" && (
+          <DriveEraser
+            onStart={() => nav("drive-progress")}
+            onCancel={() => nav("dashboard")}
+          />
+        )}
+
+        {screen === "drive-progress" && (
+          <ErasureProgress
+            onComplete={() => nav("drive-success")}
+          />
+        )}
+
+        {screen === "drive-success" && (
+          <ErasureSuccess
+            onDashboard={() => nav("dashboard")}
+            onReport={() => nav("reports")}
+          />
+        )}
+
+        {screen === "file-eraser" && (
+          <FileEraser
+            onCancel={() => nav("dashboard")}
+          />
+        )}
+
+        {screen === "file-recovery" && (
+          <FileRecovery
+            onStartScan={() => nav("scan-progress")}
+            onCancel={() => nav("dashboard")}
+          />
+        )}
+
+        {screen === "scan-progress" && (
+          <ScanProgress
+            onComplete={() => nav("scan-results")}
+          />
+        )}
+
+        {screen === "scan-results" && (
+          <ScanResults
+            onPreview={() => nav("file-preview")}
+            onBack={() => nav("file-recovery")}
+          />
+        )}
+
+        {screen === "file-preview" && (
+          <FilePreview
+            onBack={() => nav("scan-results")}
+            onRecover={() => nav("scan-results")}
+          />
+        )}
+
+        {screen === "reports" && <Reports />}
+
+        {screen === "settings" && <Settings />}
+      </main>
     </div>
   );
 }
