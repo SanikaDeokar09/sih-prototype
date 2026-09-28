@@ -82,6 +82,7 @@ export default function App() {
         {screen === "file-eraser" && (
           <FileEraser
             onCancel={() => nav("dashboard")}
+            onReport={()=>nav('reports')}
           />
         )}
 
